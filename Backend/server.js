@@ -11,7 +11,7 @@ const MONGODB_URL = process.env.MONGODB_URL
 const Jokes_database_name = "JOKES";
 
 // Converting the body of objects to json
-app.use(express.json())
+app.use(express.json)
 
 
 app.get('/',(req, res)=>{
