@@ -1,18 +1,41 @@
 version: '3'
 services:
-          jokes-api:
-              container_name: jokes-api
-              image: src/jokes-api
-              restart: always
-              build: .
-              ports: 
-                - "3000:3000"
-              links:
-                 - mongo
-          mongo:
-            container_name: mongo
-            image: mongo 
-            volumes:
-              - ./data:/data/db
-            ports:
-              - "27017:27017"
+  jokes-api-backend:
+    container_name: jokes-api-backend
+    build:
+      context: .
+      args:
+        BACKEND_PORT: ${BACKEND_PORT:-4000}
+        MONGODB_URL: ${MONGODB_URL:-mongodb://mongo:27017/JOKES} # Default if MONGODB_URL is not set
+    ports: 
+      - "${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}"
+    environment:
+      - MONGODB_URL=${MONGODB_URL:-mongodb://mongo:27017/JOKES}
+      - BACKEND_PORT=${BACKEND_PORT:-4000}
+    depends_on:
+      - mongo
+
+  web:
+    container_name: jokes-api-frontend
+    build: 
+      context: .
+      dockerfile: Web.Dockerfile
+      args:
+        FRONTEND_PORT: ${FRONTEND_PORT:-3000}
+        MONGODB_URL: ${MONGODB_URL:-mongodb://mongo:27017/JOKES}
+    ports:
+      - "${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}"
+    environment:
+      - MONGODB_URL=${MONGODB_URL:-mongodb://mongo:27017/JOKES}
+      - FRONTEND_PORT=${FRONTEND_PORT:-3000}
+    depends_on:
+      - jokes-api-backend
+      - mongo
+
+  mongo:
+    container_name: mongo
+    image: mongo:6.0
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"

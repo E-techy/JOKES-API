@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOKES API</title>
+  <link rel="stylesheet" href="./public/jokes-api.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <h1 class="title">JOKES API</h1>
+  </header>
+
+  <!-- Form Section -->
+  <div class="form-container">
+    <!-- Left Section: Tabs -->
+    <div class="left-section">
+      <div class="tab active" id="getJokesTab">Get Jokes</div>
+      <div class="tab" id="addJokesTab">Add Jokes</div>
+    </div>
+
+    <!-- Right Section: URL input and Multi-line Text Box -->
+    <div class="right-section">
+      <!-- URL Input with Search Button -->
+      <div class="url-container">
+        <input type="text" class="url-input" placeholder="Eg url http://localhost:4000/jokes?LANGUAGE=ENGLISH&NO_OF_JOKES=5">
+        <button class="search-button">
+          <img src="https://cdn-icons-png.flaticon.com/512/786/786205.png" alt="Send">
+        </button>
+       
+      </div>
+       <!-- This div will contain the response messages -->
+      <div class="response-container"></div>
+      <!-- Multi-line Text Area -->
+      <textarea class="textarea" placeholder='Only JSON data is accepted to add jokes to the database. 
+      Add multiple jokes in the form of an array of jokes in the given format. * 
+      {"jokes": ["Add your first joke here",
+                 "Add your second joke here",
+                 "Add your third joke and so on"
+                  ]
+        }'></textarea>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>© Ashutosh Kumar Singh. All rights reserved.</p>
+    <div class="social-links">
+      <a href="http://github.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub">
+      </a>
+      <a href="http://github.com" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+      </a>
+    </div>
+  </footer>
+</body>
+<script src="./public/jokes-api.js"></script>
+</html>

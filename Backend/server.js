@@ -1,8 +1,14 @@
 require("dotenv").config()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.BACKEND_PORT || 4000
 const {connect_to_database} = require("./mongo")
 const express = require("express");
+const cors = require('cors')
 const app = express()
+
+// Setting up the CORS to allow the web interface to connect to the Backend interface
+app.use(cors({
+    origin: "*"
+}))
 
 //Mongodb URL
 const MONGODB_URL = process.env.MONGODB_URL
@@ -11,10 +17,11 @@ const MONGODB_URL = process.env.MONGODB_URL
 const Jokes_database_name = "JOKES";
 
 // Converting the body of objects to json
-app.use(express.json)
+app.use(express.json())
 
 
 app.get('/',(req, res)=>{
+    
     res.send("Hello World")
 })
 
@@ -23,7 +30,7 @@ app.get('/jokes', async(req, res)=>{
     const NO_OF_JOKES = parseInt(req.query.NO_OF_JOKES);
 
     // The collection name for the jokes should be in the format LANGUAGE_JOKES e.g. ENGLISH_JOKES
-    const LANGUAGE = req.query.LANGUAGE;
+    const LANGUAGE = req.query.LANGUAGE.toUpperCase();
     
     // Connecting to the database and fetching jokes
         let {database, connection_status, client} = await connect_to_database(MONGODB_URL, Jokes_database_name);
@@ -47,7 +54,7 @@ app.get('/jokes', async(req, res)=>{
 app.post("/addjokes", async(req, res)=>{
 
     // Collection name to which the new jokes should be added
-    const collection_name = `${req.query.LANGUAGE}_JOKES`;
+    const collection_name = `${req.query.LANGUAGE.toUpperCase()}_JOKES`;
 
     const jokes_array = req.body.jokes.map(joke => ({ jokes: joke }));
 
@@ -74,7 +81,7 @@ app.post("/addjokes", async(req, res)=>{
 
 
 
-// Starting the Server
+//Starting the Server
 app.listen(PORT,()=>{
     console.log(`Server is listening on PORT ${PORT}`);
 })

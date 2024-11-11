@@ -13,8 +13,14 @@ RUN npm install
 # Copying the rest of the folders to ./src
 COPY . .
 
-# Exposing the port on which the app runs
-EXPOSE 3000
+# Define MONGODB_URL with a default fallback
+ARG MONGODB_URL="mongodb://mongo:27017/JOKES"
+ENV MONGODB_URL=$MONGODB_URL
+
+# Exposing the port on which the backend of the app runs
+ARG BACKEND_PORT=4000
+ENV BACKEND_PORT=$BACKEND_PORT
+EXPOSE $BACKEND_PORT
 
 # Command to run the application
-CMD [ "npm","start"]
+CMD [ "node","./Backend/server.js"]

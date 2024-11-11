@@ -1,0 +1,207 @@
+/* Reset and basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* Title Section */
+  .header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .title {
+    font-size: 3em;
+    font-weight: bold;
+    color: transparent;
+    position: relative;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  /* Moving Gradient Border */
+  .title::before {
+    content: "JOKES API";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-weight: bold;
+    color: #121212;
+    -webkit-text-stroke: 3px transparent;
+    text-shadow: 
+      0px 0px 8px rgba(255, 255, 255, 0.5),
+      0px 0px 4px #f093fb,
+      0px 0px 8px #f5576c,
+      0px 0px 12px #4facfe,
+      0px 0px 16px #00f2fe;
+    animation: gradient-border-move 3s linear infinite;
+  }
+
+  @keyframes gradient-border-move {
+    0% { text-shadow: 0px 0px 8px #f093fb, 0px 0px 4px #f093fb; }
+    25% { text-shadow: 0px 0px 8px #f5576c, 0px 0px 4px #f5576c; }
+    50% { text-shadow: 0px 0px 8px #4facfe, 0px 0px 4px #4facfe; }
+    75% { text-shadow: 0px 0px 8px #00f2fe, 0px 0px 4px #00f2fe; }
+    100% { text-shadow: 0px 0px 8px #f093fb, 0px 0px 4px #f093fb; }
+  }
+
+  /* Form Container */
+  .form-container {
+    background-color: #1c1c1c;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+
+  /* Left Section */
+  .left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tab {
+    background-color: #2d2d2d;
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .tab.active {
+    background-color: #4facfe;
+  }
+
+  .tab:hover {
+    background-color: #4a4a4a;
+  }
+
+  /* Right Section */
+  .right-section {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+  }
+
+  /* URL Input Box */
+  .url-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .url-input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2d2d2d;
+    color: #fff;
+    font-size: 1em;
+  }
+
+  /* Search Button with Hover Effect */
+  .search-button {
+    padding: 10px;
+    background-color: #4facfe;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+  }
+
+  .search-button:hover {
+    background-color: #00f2fe;
+  }
+
+  .search-button img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Multi-line Text Area */
+  .textarea {
+    padding: 10px;
+    background-color: #2d2d2d;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    resize: vertical;
+    height: 200px;
+    display: none;
+    opacity: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .textarea.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .textarea.hidden {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  /* Footer */
+  footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #1c1c1c;
+    padding: 10px;
+    text-align: center;
+    color: #ccc;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  footer .social-links {
+    display: flex;
+    gap: 15px;
+  }
+
+  footer .social-links a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  footer .social-links img {
+    width: 24px;
+    height: 24px;
+  }
