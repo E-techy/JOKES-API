@@ -1,20 +1,26 @@
 version: '3'
 services:
+  # backend service which will allow us to add and get jokes from the mongodb database based on the MONGODB_URL environment variable
+  # The MONGODB_URL can be set to a local mongodb url or a cloud MongoDB URI with the userid and password value
   jokes-api-backend:
     container_name: jokes-api-backend
     build:
       context: .
       args:
         BACKEND_PORT: ${BACKEND_PORT:-4000}
-        MONGODB_URL: ${MONGODB_URL:-mongodb://mongo:27017/JOKES} # Default if MONGODB_URL is not set
+        # Setting the value of the MONGODB_URL based on the .env file value. The default URL will be the local mongodb instance URL
+        MONGODB_URL: ${MONGODB_URL:-mongodb://mongo:27017/JOKES} 
     ports: 
+      # Setting the PORT on which the backend runs. The default is PORT 4000
       - "${BACKEND_PORT:-4000}:${BACKEND_PORT:-4000}"
     environment:
       - MONGODB_URL=${MONGODB_URL:-mongodb://mongo:27017/JOKES}
       - BACKEND_PORT=${BACKEND_PORT:-4000}
+    # This will allow the jokes-api-backend container to interact with the mongodb container if both are running on the same server
     depends_on:
       - mongo
 
+  # The frontend service which provides a GUI to interact with the jokes-api-backend service for adding and getting jokes.
   web:
     container_name: jokes-api-frontend
     build: 
@@ -24,18 +30,25 @@ services:
         FRONTEND_PORT: ${FRONTEND_PORT:-3000}
         MONGODB_URL: ${MONGODB_URL:-mongodb://mongo:27017/JOKES}
     ports:
+      # Setting the port on which the frontend service runs. The default value will be 3000.
       - "${FRONTEND_PORT:-3000}:${FRONTEND_PORT:-3000}"
     environment:
       - MONGODB_URL=${MONGODB_URL:-mongodb://mongo:27017/JOKES}
       - FRONTEND_PORT=${FRONTEND_PORT:-3000}
     depends_on:
+      #This will allow the frontend service to interact with the backend service and the local mongodb container.
       - jokes-api-backend
       - mongo
 
+  # Local MongoDB instance. Used by the backend service to add and get jokes.
+  # If the MONGODB_URL environment variable is set the the cloud instance or mongodb atlas then this container is not used for storing the data.
   mongo:
     container_name: mongo
     image: mongo:6.0
+    # Saving the data of the MongoDB in a local folder ./data so that the jokes added to the mongodb instance is not lost when it is 
+    # restarted or when the mongo container is destroyed.
     volumes:
       - ./data:/data/db
     ports:
+      # localhost port for the mongo container 
       - "27017:27017"

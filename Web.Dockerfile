@@ -19,10 +19,11 @@ COPY Web ./Web
 ARG MONGODB_URL="mongodb://mongo:27017/JOKES"
 ENV MONGODB_URL=$MONGODB_URL
 
-# Exposing the frontend server port
-# Use dynamic port from environment variable with fallback to 3000
+
+# Using dynamic port from environment variable with fallback to 3000
 ARG FRONTEND_PORT=3000
 ENV FRONTEND_PORT=$FRONTEND_PORT
+# Exposing the frontend server port
 EXPOSE $FRONTEND_PORT
 
 # Command to run the web application

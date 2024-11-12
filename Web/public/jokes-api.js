@@ -6,11 +6,11 @@ const sendButton = document.querySelector('.search-button');
 const urlInput = document.querySelector('.url-input');
 const responseContainer = document.querySelector('.response-container');
 
-// By default, set "Get Jokes" as active, and hide the textarea
+// By default, set the "Get Jokes" as active, and hiding the textarea used to add jokes
 getJokesTab.classList.add('active');
 textarea.classList.add('hidden');
 
-// Event listeners for tab clicks
+// Event listeners for tab clicks on "Get Jokes" tab
 getJokesTab.addEventListener('click', () => {
   getJokesTab.classList.add('active');
   addJokesTab.classList.remove('active');
@@ -18,6 +18,7 @@ getJokesTab.addEventListener('click', () => {
   textarea.classList.remove('show');
 });
 
+// Event listeners for tab clicks on "Add Jokes" tab
 addJokesTab.addEventListener('click', () => {
   addJokesTab.classList.add('active');
   getJokesTab.classList.remove('active');
@@ -25,7 +26,7 @@ addJokesTab.addEventListener('click', () => {
   textarea.classList.add('show');
 });
 
-// Function to validate URL for the Get Jokes tab
+// Function to validate URL for the Get Jokes tab to see whether it contains the LANGUAGE and NO_OF_JOKES query params
 function validateGetJokesUrl(url) {
   const urlPattern = /^https?:\/\/[\w.-]+(\.[\w\.-]+)*(:\d+)?(\/[\w\.-]*)*(\?LANGUAGE=[a-zA-Z]+&NO_OF_JOKES=(\d+))$/;
   const match = url.match(urlPattern);
@@ -36,13 +37,14 @@ function validateGetJokesUrl(url) {
   return noOfJokes >= 1 && noOfJokes <= 500;
 }
 
-// Function to validate URL for the Add Jokes tab
+// Function to validate URL for the Add Jokes tab to see whether it contains the LANGUAGE query params
 function validateAddJokesUrl(url) {
   const urlPattern = /^https?:\/\/[\w.-]+(\.[\w\.-]+)*(:\d+)?(\/[\w\.-]*)*(\?LANGUAGE=[a-zA-Z]+)$/;
   return urlPattern.test(url);
 }
 
-// Function to validate JSON format in the textarea for the Add Jokes tab
+// Function to validate JSON format in the textarea for the Add Jokes tab which will allow the clients to send only valid json data in the 
+// proper format 
 function validateJokesJson(jsonString) {
   try {
     const data = JSON.parse(jsonString);

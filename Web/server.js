@@ -7,7 +7,7 @@ const WebPORT = process.env.FRONTEND_PORT || 3000
 // Serve static files from the "public" folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-
+// Main route to send the frontend page to the clients 
 app.get("/",(req,res)=>{
     res.sendFile(`${__dirname}/jokes-api.html`)
 })
